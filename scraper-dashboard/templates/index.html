@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel de Scrapers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-title">
+      <p class="eyebrow">SALA DE CONTROL</p>
+      <h1>Panel de Scrapers</h1>
+    </div>
+    <div class="summary" id="summary">
+      <div class="chip" data-key="total"><span class="chip-value">0</span><span class="chip-label">total</span></div>
+      <div class="chip chip-ok" data-key="ok"><span class="chip-value">0</span><span class="chip-label">ok</span></div>
+      <div class="chip chip-running" data-key="running"><span class="chip-value">0</span><span class="chip-label">corriendo</span></div>
+      <div class="chip chip-error" data-key="error"><span class="chip-value">0</span><span class="chip-label">error</span></div>
+    </div>
+    <a class="logout-link" href="{{ url_for('logout') }}">Salir</a>
+  </header>
+
+  <main class="grid" id="taskGrid">
+    <!-- las tarjetas se generan por JS -->
+  </main>
+
+  <div class="modal-backdrop" id="logModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="logModalTitle">Log</h2>
+        <button class="modal-close" id="logModalClose">&times;</button>
+      </div>
+      <pre class="log-view" id="logModalBody">Cargando...</pre>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

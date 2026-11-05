@@ -1,0 +1,447 @@
+{
+  "tasks": [
+    {
+      "id": "precios_competencia",
+      "name": "Scraper de precios - competencia",
+      "bat_path": "C:\\Scrapers\\precios_competencia\\run.bat",
+      "task_scheduler_name": "Scrapers\\PreciosCompetencia",
+      "schedule": "Diario 06:00",
+      "host": "SERVIDOR1",
+      "log_dir": "\\\\SERVIDOR1\\ScraperLogs\\precios_competencia"
+    },
+    {
+      "id": "stock_proveedores",
+      "name": "Scraper de stock - proveedores",
+      "bat_path": "C:\\Scrapers\\stock_proveedores\\run.bat",
+      "task_scheduler_name": "Scrapers\\StockProveedores",
+      "schedule": "Cada 4 horas",
+      "host": "SERVIDOR1",
+      "log_dir": "\\\\SERVIDOR1\\ScraperLogs\\stock_proveedores"
+    },
+    {
+      "id": "noticias_sector",
+      "name": "Scraper de noticias del sector",
+      "bat_path": "C:\\Scrapers\\noticias_sector\\run.bat",
+      "task_scheduler_name": "Scrapers\\NoticiasSector",
+      "schedule": "Diario 08:30",
+      "host": "SERVIDOR2",
+      "log_dir": "\\\\SERVIDOR2\\ScraperLogs\\noticias_sector"
+    },
+    {
+      "id": "aws_scraping",
+      "name": "Aws scraping",
+      "bat_path": "C:\\scraping\\AWS_Scraping\\deposito bsa.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\aws_scraping"
+    },
+    {
+      "id": "aws_scraping_conciliacion_bancaria",
+      "name": "Aws scraping conciliacion bancaria",
+      "bat_path": "C:\\scraping\\Aws_scraping_conciliacion_bancaria\\bsa.bat",
+      "task_scheduler_name": "Conciliacion Santander",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\aws_scraping_conciliacion_bancaria"
+    },
+    {
+      "id": "aws_scraping_depositos_transbank",
+      "name": "Aws scraping depositos transbank",
+      "bat_path": "C:\\scraping\\AWS_Scraping_depositos_transbank\\transbank.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\aws_scraping_depositos_transbank"
+    },
+    {
+      "id": "bestadocompraaqui",
+      "name": "Bestadocompraaqui",
+      "bat_path": "C:\\scraping\\BestadoCompraAqui\\bot_BestadoCompraAqui.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\bestadocompraaqui"
+    },
+    {
+      "id": "bestadocompraaqui_sftp",
+      "name": "Bestadocompraaqui sftp",
+      "bat_path": "C:\\scraping\\BestadoCompraAqui_sftp\\compra_aqui.bat",
+      "task_scheduler_name": "Boton de pago compra aqui sftp",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\bestadocompraaqui_sftp"
+    },
+    {
+      "id": "bestadocompraaqui_sftp_prod",
+      "name": "Bestadocompraaqui sftp prod",
+      "bat_path": "C:\\scraping\\BestadoCompraAqui_sftp_Prod\\compra_aqui_SFTP_Prod.bat",
+      "task_scheduler_name": "Bestado_compraAqui_sftp_prod",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\bestadocompraaqui_sftp_prod"
+    },
+    {
+      "id": "boletas_honorarios",
+      "name": "Boletas honorarios",
+      "bat_path": "C:\\scraping\\Boletas_honorarios\\bot.bat",
+      "task_scheduler_name": "ejecutar boletas de honorarios",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\boletas_honorarios"
+    },
+    {
+      "id": "bot_licencias_sap",
+      "name": "Bot licencias sap",
+      "bat_path": "C:\\scraping\\Bot Licencias SAP\\bot.bat",
+      "task_scheduler_name": "Ejecutar licencias SAP",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\bot_licencias_sap"
+    },
+    {
+      "id": "boton_de_pago_banco_de_chile_sftp_prod",
+      "name": "Boton de pago banco de chile sftp prod",
+      "bat_path": "C:\\scraping\\Boton de pago banco de Chile_sftp_Prod\\BChile_botonPago_sftp_prod.bat",
+      "task_scheduler_name": "Bchile_Bpago_Sftp_Prod",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\boton_de_pago_banco_de_chile_sftp_prod"
+    },
+    {
+      "id": "boton_de_pago_banco_de_estado_sftp",
+      "name": "Boton de pago banco de estado sftp",
+      "bat_path": "C:\\scraping\\Boton de pago banco de Estado_sftp\\boton_de_pago.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\boton_de_pago_banco_de_estado_sftp"
+    },
+    {
+      "id": "boton_de_pago_banco_de_estado_sftp_prod",
+      "name": "Boton de pago banco de estado sftp prod",
+      "bat_path": "C:\\scraping\\Boton de pago banco de Estado_sftp_Prod\\Bestado_BotonPago_sftp_prod.bat",
+      "task_scheduler_name": "BEstado_botonpago_sftp_prod",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\boton_de_pago_banco_de_estado_sftp_prod"
+    },
+    {
+      "id": "botonpagobci",
+      "name": "Botonpagobci",
+      "bat_path": "C:\\scraping\\botonPagoBCI\\bot_BCI.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\botonpagobci"
+    },
+    {
+      "id": "botonpagobci_sftp",
+      "name": "Botonpagobci sftp",
+      "bat_path": "C:\\scraping\\botonPagoBCI_sftp\\bot_BCI.bat",
+      "task_scheduler_name": "Boton de pago BCI SFTP",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\botonpagobci_sftp"
+    },
+    {
+      "id": "botonpagobci_sftp_prod",
+      "name": "Botonpagobci sftp prod",
+      "bat_path": "C:\\scraping\\botonPagoBCI_sftp_Prod\\BCI_boton_sftp_prod.bat",
+      "task_scheduler_name": "Bci_boton_sftp_prod",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\botonpagobci_sftp_prod"
+    },
+    {
+      "id": "correobancoestado",
+      "name": "Correobancoestado",
+      "bat_path": "C:\\scraping\\CorreoBancoEstado\\bot_BCI.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\correobancoestado"
+    },
+    {
+      "id": "descargacartolasbancoestado",
+      "name": "Descargacartolasbancoestado",
+      "bat_path": "C:\\scraping\\descargaCartolasBancoestado\\DEscarga CArtola bestado correo.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\descargacartolasbancoestado"
+    },
+    {
+      "id": "descargacartolasbancoestado_descarga_cartolas_banco_estado",
+      "name": "Descargacartolasbancoestado descarga cartolas banco estado",
+      "bat_path": "C:\\scraping\\descargaCartolasBancoestado\\descarga Cartolas Banco estado\\bot_BCI.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\descargacartolasbancoestado_descarga_cartolas_banco_estado"
+    },
+    {
+      "id": "envio_correo",
+      "name": "Envio correo",
+      "bat_path": "C:\\scraping\\Envio correo\\Envio correo BCI.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\envio_correo"
+    },
+    {
+      "id": "envio_correo_info_de_pago_itau",
+      "name": "Envio correo info de pago itau",
+      "bat_path": "C:\\scraping\\Envio correo info de pago ITAU\\Envio correo ITAU.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\envio_correo_info_de_pago_itau"
+    },
+    {
+      "id": "envio_correo_informacion_pago_bci",
+      "name": "Envio correo informacion pago bci",
+      "bat_path": "C:\\scraping\\Envio correo informacion Pago BCI\\Envio correo BCI.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\envio_correo_informacion_pago_bci"
+    },
+    {
+      "id": "enviocorreoinfobchile",
+      "name": "Enviocorreoinfobchile",
+      "bat_path": "C:\\scraping\\EnvioCorreoinfoBChile\\enviocorreo.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\enviocorreoinfobchile"
+    },
+    {
+      "id": "factoringpdf",
+      "name": "Factoringpdf",
+      "bat_path": "C:\\scraping\\FactoringPDF\\factoring PDF.bat",
+      "task_scheduler_name": "Factoring PDF",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\factoringpdf"
+    },
+    {
+      "id": "factoringxml",
+      "name": "Factoringxml",
+      "bat_path": "C:\\scraping\\FactoringXML\\bot.bat",
+      "task_scheduler_name": "ejecutar factoringXML",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\factoringxml"
+    },
+    {
+      "id": "factoringxml2_0",
+      "name": "Factoringxml2.0",
+      "bat_path": "C:\\scraping\\FactoringXML2.0\\bot.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\factoringxml2_0"
+    },
+    {
+      "id": "informacion_de_pago",
+      "name": "Informacion de pago",
+      "bat_path": "C:\\scraping\\informacion_de_pago\\informacion.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\informacion_de_pago"
+    },
+    {
+      "id": "limpiars3_boton_de_pago_bestado_bchile",
+      "name": "Limpiars3-boton de pago bestado bchile",
+      "bat_path": "C:\\scraping\\limpiarS3-boton de pago_Bestado_Bchile\\LimpiarS3bestado.bat",
+      "task_scheduler_name": "Limpiar S3 boton BancoEstado",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\limpiars3_boton_de_pago_bestado_bchile"
+    },
+    {
+      "id": "limpiars3_transbank",
+      "name": "Limpiars3-transbank",
+      "bat_path": "C:\\scraping\\limpiarS3-Transbank\\LimpiarS3Transbank.bat",
+      "task_scheduler_name": "LimpiezaS3Transbank",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\limpiars3_transbank"
+    },
+    {
+      "id": "limpiars3ypacpat",
+      "name": "Limpiars3ypacpat",
+      "bat_path": "C:\\scraping\\limpiarS3yPACPAT\\Limpiar.bat",
+      "task_scheduler_name": "Limpia S3 Carpeta Recauadcion",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\limpiars3ypacpat"
+    },
+    {
+      "id": "plsql_python",
+      "name": "Plsql python",
+      "bat_path": "C:\\scraping\\PLSQL Python\\archivo.bat",
+      "task_scheduler_name": "Archivo Excel TBK",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\plsql_python"
+    },
+    {
+      "id": "plsql_python_copia",
+      "name": "Plsql python - copia",
+      "bat_path": "C:\\scraping\\PLSQL Python - copia\\archivo.bat",
+      "task_scheduler_name": "Archivo Excel TBK con OC",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\plsql_python_copia"
+    },
+    {
+      "id": "reinicia_outlook",
+      "name": "Reinicia outlook",
+      "bat_path": "C:\\scraping\\reinicia outlook\\reiniciooutlook.bat",
+      "task_scheduler_name": "reincio outlook",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\reinicia_outlook"
+    },
+    {
+      "id": "scraping_botpat",
+      "name": "Scraping botpat",
+      "bat_path": "C:\\scraping\\botPat.bat",
+      "task_scheduler_name": "Descarga Universo PAT TransData",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\scraping_botpat"
+    },
+    {
+      "id": "scraping_botpat_copia",
+      "name": "Scraping botpat - copia",
+      "bat_path": "C:\\scraping\\botPat - copia.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\scraping_botpat_copia"
+    },
+    {
+      "id": "scraping_informacion",
+      "name": "Scraping informacion",
+      "bat_path": "C:\\scraping\\informacion.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\scraping_informacion"
+    },
+    {
+      "id": "sftpbancoestado",
+      "name": "Sftpbancoestado",
+      "bat_path": "C:\\scraping\\SFTPBancoEstado\\bancoestado_SFTP.bat",
+      "task_scheduler_name": "SFTP_BancoEstado",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\sftpbancoestado"
+    },
+    {
+      "id": "sftpbpservipag",
+      "name": "Sftpbpservipag",
+      "bat_path": "C:\\scraping\\SFTPBPServipag\\BPservipag_sftp.bat",
+      "task_scheduler_name": "SFTP_BPServipag",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\sftpbpservipag"
+    },
+    {
+      "id": "sftpprestored",
+      "name": "Sftpprestored",
+      "bat_path": "C:\\scraping\\SFTPPrestoRED\\prestored_SFTP.bat",
+      "task_scheduler_name": "SFTP_PrestoRed",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\sftpprestored"
+    },
+    {
+      "id": "sftpsantander",
+      "name": "Sftpsantander",
+      "bat_path": "C:\\scraping\\SFTPSantander\\santander_SFTP.bat",
+      "task_scheduler_name": "SFTP_Santander_Prod",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\sftpsantander"
+    },
+    {
+      "id": "sftpservipag",
+      "name": "Sftpservipag",
+      "bat_path": "C:\\scraping\\SFTPServipag\\servipag_sftp.bat",
+      "task_scheduler_name": "SFTP_Servipag",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\sftpservipag"
+    },
+    {
+      "id": "sftpservipagexpress",
+      "name": "Sftpservipagexpress",
+      "bat_path": "C:\\scraping\\SFTPServipagExpress\\servipagExpress_sftp.bat",
+      "task_scheduler_name": "SFTP_ServipagExpress",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\sftpservipagexpress"
+    },
+    {
+      "id": "sftpunired",
+      "name": "Sftpunired",
+      "bat_path": "C:\\scraping\\SFTPUnired\\unired_sftp.bat",
+      "task_scheduler_name": "SFTP Unired",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\sftpunired"
+    },
+    {
+      "id": "telelectura_consultar_medidores_athena",
+      "name": "Telelectura consultar-medidores-athena",
+      "bat_path": "C:\\scraping\\Telelectura\\Consultar-medidores-athena\\consultar_medidores_athena.bat",
+      "task_scheduler_name": "descarga_info_medidores_athena",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\telelectura_consultar_medidores_athena"
+    },
+    {
+      "id": "telelectura_obtenermedidoresgatewaybecoy",
+      "name": "Telelectura obtenermedidoresgatewaybecoy",
+      "bat_path": "C:\\scraping\\Telelectura\\ObtenerMedidoresGatewayBecoY\\ObtenerMedidoresGatewayBecoY.bat",
+      "task_scheduler_name": "descargaInfoMedidoresBecoy",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\telelectura_obtenermedidoresgatewaybecoy"
+    },
+    {
+      "id": "telelectura_obtenermedidorgateway",
+      "name": "Telelectura obtenermedidorgateway",
+      "bat_path": "C:\\scraping\\Telelectura\\ObtenerMedidorGateway\\ObtenerMedidorGateway.bat",
+      "task_scheduler_name": "descargar_medidores_gateway",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\telelectura_obtenermedidorgateway"
+    },
+    {
+      "id": "telelectura_obtenermedidorgateway_back2",
+      "name": "Telelectura obtenermedidorgateway back2",
+      "bat_path": "C:\\scraping\\Telelectura\\ObtenerMedidorGateway\\back2\\ObtenerMedidorGateway.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\telelectura_obtenermedidorgateway_back2"
+    },
+    {
+      "id": "universos_envio_correo_iuniversospac",
+      "name": "Universos envio correo iuniversospac",
+      "bat_path": "C:\\scraping\\Universos\\Envio correo iUniversosPAC\\Envio correo UniversosPAC.bat",
+      "task_scheduler_name": "Envio Correo Universos PAC",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\universos_envio_correo_iuniversospac"
+    },
+    {
+      "id": "universos_envio_correo_iuniversospat",
+      "name": "Universos envio correo iuniversospat",
+      "bat_path": "C:\\scraping\\Universos\\Envio correo iUniversosPAT\\Envio correo Universo PAT.bat",
+      "task_scheduler_name": "Envio correo Universo PAT",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\universos_envio_correo_iuniversospat"
+    },
+    {
+      "id": "universos_pac_create_task",
+      "name": "Universos pac create task",
+      "bat_path": "C:\\scraping\\Universos\\PAC\\create_task.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\universos_pac_create_task"
+    },
+    {
+      "id": "universos_pac_install_service",
+      "name": "Universos pac install service",
+      "bat_path": "C:\\scraping\\Universos\\PAC\\install_service.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\universos_pac_install_service"
+    },
+    {
+      "id": "universos_pac_uninstall_service",
+      "name": "Universos pac uninstall service",
+      "bat_path": "C:\\scraping\\Universos\\PAC\\uninstall_service.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\universos_pac_uninstall_service"
+    },
+    {
+      "id": "xml_factoringxml1_0",
+      "name": "Xml factoringxml1.0",
+      "bat_path": "C:\\scraping\\XML\\FactoringXML1.0\\bot.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\xml_factoringxml1_0"
+    },
+    {
+      "id": "xml_factoringxml_1",
+      "name": "Xml factoringxml-1",
+      "bat_path": "C:\\scraping\\XML\\FactoringXML-1\\bot.bat",
+      "task_scheduler_name": "",
+      "schedule": "",
+      "log_dir": "C:\\ScraperDashboard\\logs\\xml_factoringxml_1"
+    }
+  ]
+}

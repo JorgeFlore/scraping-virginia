@@ -1,0 +1,50 @@
+import requests
+from datetime import *
+from utils import credenciales
+import os
+import base64
+
+correos=credenciales.listar_correos()
+
+documetos=""
+archivos_recibidos=list()
+
+
+def correo(mensaje,empresa, screenshot_path=None):
+    for i in correos:
+        print(i[0])
+        notificar(i[0],mensaje,empresa, screenshot_path)   
+
+
+def notificar(email,mensaje,empresa,screenshot_path = None):
+ 
+    url = 'http://indiana/WebApiSmtpSOA/SOA/SendNotificacionEmail'
+    fecha = datetime.now().strftime("%d-%m-%Y")
+
+    # if archivo is None:
+    #     archivo = "No se adjunto archivo"
+    
+
+    imagen_base64 = ""
+    if screenshot_path and os.path.exists(screenshot_path):
+        with open(screenshot_path, "rb") as img_file:
+            imagen_base64 = base64.b64encode(img_file.read()).decode('utf-8')
+            
+    imagen_html = f'<img src="data:image/png;base64,{imagen_base64}" style="max-width:600px;">' if imagen_base64 else "No se adjunto imagen."
+    
+    data = {
+        "Request": [{
+                        "from": "RPA@aguasnuevas.cl",
+                        "To": [{"Email": email} ],
+                        "CC": [],
+                        "Fecha": fecha,
+                        "TipoAlerta": "Alerta Ejecución Descarga Universo PAC",
+                        "Template": "TemplAlerta9.html",
+                        "Asunto": "Universo PAC "+fecha+" "+empresa+"",
+                        "Mensaje": f"{mensaje}<br><br>{imagen_html}",
+                        # "TablaReporte": f"<p>{archivo}</p>",
+                    }]
+    }
+    requests.post(url,json=data)
+
+

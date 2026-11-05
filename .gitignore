@@ -1,0 +1,55 @@
+# --- Secretos: NUNCA subir ---
+.env
+*.env
+!.env.ejemplo
+llave*
+id_rsa*
+*.pem
+*.key
+*credenciales*.csv
+listado_mail.csv
+bancoestado-credentials.csv
+
+# --- Datos generados por los bots ---
+enviados/
+descargados/
+descargas/*
+!descargas/.gitkeep
+procesados/
+Errores/
+errores_*/
+logs/
+Correo/
+historial.json
+*.log
+*.TXT
+*.DAT
+*.xls
+*.xlsx
+*.msg
+*.pdf
+*.zip
+*.csv
+
+# --- Binarios / herramientas (se instalan aparte) ---
+*.exe
+instantclient/
+msedgedriver*
+chromedriver*
+
+# --- Python / editores ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+.vscode/
+.vs/
+.ipynb_checkpoints/
+
+# --- Respaldos locales ---
+_respaldo_diashabiles/
+
+# --- Repos propios (se versionan aparte en github.com/aguasnuevas) ---
+AWS_Scraping/
+Aws_scraping_conciliacion_bancaria/
+AWS_Scraping_depositos_transbank/

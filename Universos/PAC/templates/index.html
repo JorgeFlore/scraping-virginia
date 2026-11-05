@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Control de Scrapings</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .script-card { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .btn { padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 3px; }
+        .btn:hover { background: #0056b3; }
+        .status { padding: 5px 10px; border-radius: 3px; color: white; }
+        .running { background: #ffc107; }
+        .completed { background: #28a745; }
+        .error { background: #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>Panel de Control - Scrapings</h1>
+    
+    <div class="script-card">
+        <h3>UniversoPac - Descarga de Universos</h3>
+        <p>Descarga archivos de universo desde Banco Chile</p>
+        <a href="/run/UniversoPac.py" class="btn">Ejecutar</a>
+    </div>
+
+    <h2>Estado de Ejecuciones</h2>
+    <div id="status-container">
+        {% for script_id, info in status.items() %}
+        <div class="script-card">
+            <h4>{{ script_id }}</h4>
+            <span class="status {{ info.status }}">{{ info.status.upper() }}</span>
+            {% if info.get('start_time') %}
+                <p>Iniciado: {{ info.start_time.strftime('%H:%M:%S') }}</p>
+            {% endif %}
+            {% if info.get('end_time') %}
+                <p>Finalizado: {{ info.end_time.strftime('%H:%M:%S') }}</p>
+            {% endif %}
+            {% if info.get('error') %}
+                <p style="color: red;">Error: {{ info.error }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        setInterval(() => location.reload(), 5000);
+    </script>
+</body>
+</html>
