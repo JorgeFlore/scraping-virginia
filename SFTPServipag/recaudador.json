@@ -1,0 +1,33 @@
+{
+  "nombre": "SFTP Servipag Caja y Portal",
+  "slug": "servipag",
+  "origen": {
+    "host": "200.54.71.230",
+    "username": "AGUASNUEVASSFTP",
+    "password_env": "SFTP_SERVIPAG_PASSWORD",
+    "carpetas": [
+      "/achanar",
+      "/agde",
+      "/altiplano",
+      "/caja_araucania",
+      "/magallanes",
+      "/portal_araucania"
+    ]
+  },
+  "destino": {
+    "host": "192.168.250.11",
+    "username": "rendicionsftpprod",
+    "llave": "C:\\Scraping\\SFTPServipag\\llaveprod",
+    "ruta_remota": "/servipag/carga/"
+  },
+  "filtro": {
+    "modo": "hoy"
+  },
+  "correo": {
+    "to": "karol.alvarado@aguasnuevas.cl;griselda.aburto@aguasnuevas.cl;diego.morales@aguasnuevas.cl",
+    "cc": "jorge.flores@aguasnuevas.cl;manuel.rodriguez@aguasnuevas.cl",
+    "asunto": "Alerta SFTP Servipag Caja y Portal- {fecha}",
+    "titulo": "📦 Alerta SFTP Servipag Caja y Portal",
+    "mensaje": "Se ha ejecutado correctamente el bot de Servipag Caja y Portal SFTP. A continuación se detallan los archivos procesados:"
+  }
+}

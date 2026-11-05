@@ -22,6 +22,18 @@ información de pago, factoring, SAP/SII y consultas Oracle.
 Los scrapers AWS (`AWS_Scraping`, `Aws_scraping_conciliacion_bancaria`,
 `AWS_Scraping_depositos_transbank`) viven en sus propios repositorios de la organización.
 
+## Bots SFTP de recaudadores (motor común)
+
+Los 7 bots `SFTPServipag`, `SFTPServipagExpress`, `SFTPBPServipag`, `SFTPSantander`,
+`SFTPPrestoRED`, `SFTPBancoEstado` y `SFTPUnired` usan el mismo motor:
+
+- `comun/sftp_recaudador.py`: conexión, búsqueda, descarga, subida, historial y reintentos.
+- `comun/correo_sftp.py`: correo de resumen (misma plantilla para todos).
+- En cada carpeta: `recaudador.json` (servidor, carpetas, destino, destinatarios y asunto) + `main.py` mínimo.
+
+Agregar un recaudador nuevo = copiar una carpeta, editar su `recaudador.json` y crear la tarea programada.
+`historial.json` mantiene el mismo formato, así que los bots no vuelven a subir archivos ya enviados.
+
 ## Credenciales
 
 Ninguna contraseña está en el código. Cada bot las lee con `os.getenv(...)`.

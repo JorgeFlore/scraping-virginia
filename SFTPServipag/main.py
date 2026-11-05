@@ -1,32 +1,11 @@
-import diashabiles
-from correo import envio_correo_outlook
-from servipag_sftp import mover_archivos_sftp
-from time import sleep
-import shutil
+"""Bot SFTP Servipag Caja y Portal: la configuración está en recaudador.json y la lógica en comun/sftp_recaudador.py."""
 import os
+import sys
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.dirname(BASE_DIR))  # para encontrar la carpeta comun/
 
-#driver = webdriver.Firefox()
-run_today = diashabiles.es_habil()
+from comun.sftp_recaudador import main_recaudador  # noqa: E402
 
-CARPETA_LOCAL = './temp_sftp/'
-
-def main():
-
-    #if not run_today:
-    #    print("no es dia habil")
-    #    exit(0)
-    #else:
-        subidos_ok, fallidos = mover_archivos_sftp()
-        envio_correo_outlook(subidos_ok, fallidos, CARPETA_LOCAL=CARPETA_LOCAL)
-        
-        try:
-            if os.path.exists(CARPETA_LOCAL):
-                shutil.rmtree(CARPETA_LOCAL)
-            print("🧹 Carpeta temporal eliminada.")
-        except Exception as e:
-            print(f"⚠️ Error al borrar la carpeta temporal: {e}")
-            sleep(5) 
-    
 if __name__ == "__main__":
-    main()
+    main_recaudador(BASE_DIR)

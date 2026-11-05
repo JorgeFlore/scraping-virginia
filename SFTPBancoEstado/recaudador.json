@@ -1,0 +1,32 @@
+{
+  "nombre": "SFTP Banco Estado",
+  "slug": "bancoestado",
+  "origen": {
+    "host": "200.75.7.218",
+    "username": "grupo_aguas_nuevas",
+    "password_env": "SFTP_BANCOESTADO_PASSWORD",
+    "carpetas": [
+      "Rendiciones/Banco_Estado/Aguas_Del_Altiplano",
+      "Rendiciones/Banco_Estado/Nueva_Atacama",
+      "Rendiciones/Banco_Estado/Aguas_Araucania",
+      "Rendiciones/Banco_Estado/Aguas_Decima",
+      "Rendiciones/Banco_Estado/Aguas_Magallanes"
+    ]
+  },
+  "destino": {
+    "host": "192.168.250.11",
+    "username": "rendicionsftpprod",
+    "llave": "C:\\Scraping\\SFTPBancoEstado\\llaveprod",
+    "ruta_remota": "/bestado/pendientes/"
+  },
+  "filtro": {
+    "modo": "hoy"
+  },
+  "correo": {
+    "to": "karol.alvarado@aguasnuevas.cl;griselda.aburto@aguasnuevas.cl;diego.morales@aguasnuevas.cl",
+    "cc": "jorge.flores@aguasnuevas.cl;manuel.rodriguez@aguasnuevas.cl",
+    "asunto": "Alerta SFTP_PROD Banco Estado- {fecha}",
+    "titulo": "📦 Alerta SFTP_PROD Banco Estado",
+    "mensaje": "Se ha ejecutado correctamente el bot de Banco Estado. A continuación se detallan los archivos procesados:"
+  }
+}

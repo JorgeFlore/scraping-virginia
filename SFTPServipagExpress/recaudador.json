@@ -1,0 +1,32 @@
+{
+  "nombre": "SFTP Servipag Express",
+  "slug": "servipag_express",
+  "origen": {
+    "host": "200.54.71.230",
+    "username": "AGUASNUEVASSFTP",
+    "password_env": "SFTP_SERVIPAGEXPRESS_PASSWORD",
+    "carpetas": [
+      "/exp_achanar",
+      "/exp_agde",
+      "/exp_altiplano",
+      "/exp_araucania",
+      "/exp_magallanes"
+    ]
+  },
+  "destino": {
+    "host": "192.168.250.11",
+    "username": "rendicionsftpprod",
+    "llave": "C:\\Scraping\\SFTPServipag\\llaveprod",
+    "ruta_remota": "/servipag/carga/"
+  },
+  "filtro": {
+    "modo": "ultimas_24h"
+  },
+  "correo": {
+    "to": "karol.alvarado@aguasnuevas.cl;griselda.aburto@aguasnuevas.cl;diego.morales@aguasnuevas.cl",
+    "cc": "jorge.flores@aguasnuevas.cl;manuel.rodriguez@aguasnuevas.cl;fabian.cabrera@aguasnuevas.cl",
+    "asunto": "Alerta SFTP Servipag Express- {fecha}",
+    "titulo": "📦 Alerta SFTP Servipag Express",
+    "mensaje": "Se ha ejecutado correctamente el bot Servipag Express SFTP. A continuación se detallan los archivos procesados:"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "nombre": "SFTP PrestoRed",
+  "slug": "prestored",
+  "origen": {
+    "host": "ftp.eftgroup.net",
+    "username": "holding_aguas_nuevas",
+    "password_env": "SFTP_PRESTORED_PASSWORD",
+    "carpetas": [
+      "/ALTIPLANO",
+      "/ARAUCANIA",
+      "/MAGALLANES",
+      "/NUEVAATACAMA"
+    ]
+  },
+  "destino": {
+    "host": "192.168.250.11",
+    "username": "rendicionsftpprod",
+    "llave": "C:\\Scraping\\SFTPPrestoRED\\llaveprod",
+    "ruta_remota": "/prestored/pendientes/"
+  },
+  "filtro": {
+    "modo": "hoy"
+  },
+  "correo": {
+    "to": "karol.alvarado@aguasnuevas.cl;griselda.aburto@aguasnuevas.cl;diego.morales@aguasnuevas.cl",
+    "cc": "jorge.flores@aguasnuevas.cl;manuel.rodriguez@aguasnuevas.cl",
+    "asunto": "Alerta SFTP_PROD PrestoRed - {fecha}",
+    "titulo": "📦 Alerta SFTP_PROD PrestoRed",
+    "mensaje": "Se ha ejecutado correctamente el bot de <b>PrestoRed</b>. A continuación se detallan los archivos procesados:"
+  }
+}

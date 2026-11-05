@@ -1,0 +1,30 @@
+{
+  "nombre": "SFTP Santander",
+  "slug": "santander",
+  "origen": {
+    "host": "ftp.eftgroup.net",
+    "username": "holding_aguas_nuevas",
+    "password_env": "SFTP_SANTANDER_PASSWORD",
+    "carpetas": [
+      "/SANTANDER/ALTIPLANO",
+      "/SANTANDER/ARAUCANIA",
+      "/SANTANDER/MAGALLANES"
+    ]
+  },
+  "destino": {
+    "host": "192.168.250.11",
+    "username": "rendicionsftpprod",
+    "llave": "C:\\Scraping\\SFTPPrestoRED\\llaveprod",
+    "ruta_remota": "/bsantander/pendientes/"
+  },
+  "filtro": {
+    "modo": "hoy"
+  },
+  "correo": {
+    "to": "karol.alvarado@aguasnuevas.cl;griselda.aburto@aguasnuevas.cl;diego.morales@aguasnuevas.cl",
+    "cc": "jorge.flores@aguasnuevas.cl;manuel.rodriguez@aguasnuevas.cl",
+    "asunto": "Alerta SFTP_PROD SANTANDER - {fecha}",
+    "titulo": "📦 Alerta SFTP_PROD Santander",
+    "mensaje": "Se ha ejecutado correctamente el bot de SANTANDER. A continuación se detallan los archivos procesados:"
+  }
+}

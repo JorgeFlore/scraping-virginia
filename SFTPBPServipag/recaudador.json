@@ -1,0 +1,32 @@
+{
+  "nombre": "SFTP Botón de Pago Servipag",
+  "slug": "bp_servipag",
+  "origen": {
+    "host": "200.54.71.230",
+    "username": "AGUASNUEVASSFTP",
+    "password_env": "SFTP_BPSERVIPAG_PASSWORD",
+    "carpetas": [
+      "/BPAguasAltiplano",
+      "/BPNuevaAtacama",
+      "/BPAguasAraucania",
+      "/BPAguasDecima",
+      "/BPAguasMagallanes"
+    ]
+  },
+  "destino": {
+    "host": "192.168.250.11",
+    "username": "rendicionsftpprod",
+    "llave": "C:\\Scraping\\SFTPBPServipag\\llaveprod",
+    "ruta_remota": "/servipag/cargasbp/"
+  },
+  "filtro": {
+    "modo": "ultimas_24h"
+  },
+  "correo": {
+    "to": "karol.alvarado@aguasnuevas.cl;griselda.aburto@aguasnuevas.cl;diego.morales@aguasnuevas.cl",
+    "cc": "jorge.flores@aguasnuevas.cl;manuel.rodriguez@aguasnuevas.cl",
+    "asunto": "Alerta Boton de Pago Servipag SFTP PRODUCCION - {fecha}",
+    "titulo": "💳 Alerta Boton de Pago Servipag PRODUCCION",
+    "mensaje": "Se ha ejecutado correctamente el bot de <b>Boton de Pago Servipag PRODUCCION</b>. A continuación se detallan los archivos procesados a nuestro PRODUCCION:"
+  }
+}

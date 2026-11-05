@@ -1,0 +1,29 @@
+{
+  "nombre": "SFTP Unired",
+  "slug": "unired",
+  "origen": {
+    "host": "srvsftp.unired.cl",
+    "username": "aguasnuevas",
+    "password_env": "SFTP_UNIRED_PASSWORD",
+    "carpetas": [
+      "/home/Rendiciones/"
+    ]
+  },
+  "destino": {
+    "host": "192.168.250.11",
+    "username": "rendicionsftpprod",
+    "llave": "C:\\Scraping\\SFTPUnired\\llaveprod",
+    "ruta_remota": "/unired/pendientes/"
+  },
+  "filtro": {
+    "modo": "hoy"
+  },
+  "correo": {
+    "to": "karol.alvarado@aguasnuevas.cl;griselda.aburto@aguasnuevas.cl;diego.morales@aguasnuevas.cl",
+    "cc": "jorge.flores@aguasnuevas.cl;manuel.rodriguez@aguasnuevas.cl",
+    "asunto": "[SFTP UNIRED] Notificación de Proceso - {fecha}",
+    "formato_fecha": "%d-%m-%Y",
+    "titulo": "📦 Notificación de Proceso SFTP UNIRED",
+    "mensaje": "Se ha ejecutado exitosamente el proceso de transferencia SFTP."
+  }
+}
