@@ -59,7 +59,7 @@ for i,j in zip(empresas,usuario):
           
           password=driver.find_element(By.NAME,"j_password")
           if empresa == "Nueva Atacama":
-              password.send_keys(os.getenv("UNIVERSO_PAT_PASSWORD"))
+              password.send_keys(os.getenv("UNIVERSO_PAT_PASSWORD_NVATACAMA"))
           else:        
             password.send_keys(os.getenv("UNIVERSO_PAT_PASSWORD"))
           driver.find_element(By.CLASS_NAME, "boton").click()
