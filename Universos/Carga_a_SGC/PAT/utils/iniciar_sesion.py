@@ -2,37 +2,40 @@
 from time import sleep
 import time
 from selenium.webdriver.common.by import By
-from utils import envio_correo
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import TimeoutException, WebDriverException, ElementNotInteractableException, NoSuchElementException
 import logging
 
 
+def cerrar(driver):
+    """Cierra el navegador sin lanzar error si ya estaba cerrado."""
+    if driver is None:
+        return
+    try:
+        driver.quit()
+    except Exception:  # noqa: BLE001
+        pass
+
+
 def cargar_pagina(driver_options, url, empresa, intento_max=5, timeout=20):
-    intento = 0
-    while intento < intento_max:
+    """Abre el navegador en la URL. Devuelve el driver o None (antes hacía exit() y detenía todas las empresas)."""
+    for intento in range(1, intento_max + 1):
+        driver = None
         try:
             driver = driver_options()
             driver.set_page_load_timeout(timeout)
             driver.get(url)
-            print("Pagina procesada correctamente")
+            logging.info("[%s] Página de SGC cargada", empresa)
             return driver
         except TimeoutException:
-            print(f"Intento {intento+1}/{intento_max}: La página tardó más de {timeout} seg en cargar.")
-        except WebDriverException:
-            print(f"Intento {intento+1}/{intento_max}: La pagina no cargo, reintentando...")
-        except Exception as e:
-            print(f"Error inesperado al cargar la pagina inicial {e}")
-        
-        driver.quit()
-        intento += 1
+            logging.warning("[%s] Intento %s/%s: la página tardó más de %s s", empresa, intento, intento_max, timeout)
+        except Exception as e:  # noqa: BLE001
+            logging.warning("[%s] Intento %s/%s: no se pudo abrir la página: %s", empresa, intento, intento_max, e)
+        cerrar(driver)
         sleep(3)
-
-    mensaje = "ERROR CRITICO: No se pudo cargar la pagina inicial. Terminando el programa..."
-    print(mensaje)
-    envio_correo.correo(mensaje, empresa)
-    exit()
+    logging.error("[%s] No se pudo cargar la página inicial de SGC", empresa)
+    return None
 
 
 
@@ -54,11 +57,13 @@ def verificar_contenido_pagina_inicial(driver, driver_options, url, empresa, int
             
             except Exception:
                 print("No se pudo recargar la página dentro del tiempo esperado. Intentando reiniciar el proceso.")
-                driver.quit()
+                cerrar(driver)
                 if reinicio == 1:
-                    break                    
-                cargar_pagina(driver_options, url, empresa)
+                    break
+                driver = cargar_pagina(driver_options, url, empresa)  # antes se perdía este driver nuevo
                 reinicio += 1
+                if driver is None:
+                    break
         
         intento += 1
         continue 
@@ -84,13 +89,13 @@ def seleccionar_empresa(driver, empresa):
         sleep(1)
 
     except (NoSuchElementException, ElementNotInteractableException, TimeoutException):
-        driver.quit()
+        cerrar(driver)
         return False  
 
     except Exception as e:
         logging.error(f"Error inesperado al seleccionar la empresa {empresa}: {str(e)}")
         print(f"Error inesperado al seleccionar la empresa {empresa}: {str(e)}")
-        driver.quit()
+        cerrar(driver)
         return False  
 
     return True  
@@ -154,7 +159,7 @@ def inicar_sesion(driver, user, password, driver_options, url, empresa, intento_
             
                 if time.time() - start_time > timeout:
                     print("Se alcanzo el tiempo maximo de espera, posiblemente se congelo el inicio de sesion")
-                    driver.quit()
+                    cerrar(driver)
                     return None
                 sleep(3)
         
@@ -162,11 +167,16 @@ def inicar_sesion(driver, user, password, driver_options, url, empresa, intento_
             print(f"No se pudo concretar el inicio de sesion, intento {intento + 1}/{intento_max}.")
          
         intento += 1
-        driver.refresh()
-        sleep(3)
-        verificar_contenido_pagina_inicial(driver, driver_options, url, empresa)
-        seleccionar_empresa(driver,empresa)
-        continue 
-    driver.quit()
+        try:
+            driver.refresh()
+            sleep(3)
+        except Exception:  # noqa: BLE001
+            pass
+        driver = verificar_contenido_pagina_inicial(driver, driver_options, url, empresa)
+        if driver is None or not seleccionar_empresa(driver, empresa):
+            logging.error("No se pudo volver a la pantalla de login para reintentar")
+            return None
+        continue
+    cerrar(driver)
     logging.error(f"No se pudo concretar el inicio de sesion")
     return None

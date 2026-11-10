@@ -1,143 +1,124 @@
-from time import sleep
+"""
+Seguimiento de las ventanas de proceso de SGC (paso 1: validar archivo, paso 2: ejecutar carga).
+
+Misma lógica que antes estaba dentro de carga_universo_pat.py, con estas correcciones:
+  - Sin variable global screenshot_path: la captura viaja dentro de la excepción
+    (ErrorCarga.screenshot), así nunca se adjunta la captura de otra empresa.
+  - El reintento por ventana cerrada llamaba a comprobar_alerta() sin el parámetro
+    'proceso' y fallaba siempre con TypeError. Corregido.
+  - Mensajes de tiempo coherentes (90 s).
+"""
+import logging
+import os
 import time
+from datetime import datetime
+from time import sleep
+
+from selenium.common.exceptions import (NoAlertPresentException, NoSuchWindowException,
+                                        TimeoutException, WebDriverException)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.common.exceptions import NoAlertPresentException, TimeoutException, WebDriverException, NoSuchWindowException, ElementClickInterceptedException
 
-import os
-import logging
+ESPERA_MAXIMA = 90  # segundos sin avance antes de considerar el proceso congelado
 
 
-def comprobar_alerta(driver, empresa, errores_PAT, proceso):
-    global screenshot_path
+class ErrorCarga(Exception):
+    """Error de una empresa; puede traer la ruta de una captura de pantalla."""
+
+    def __init__(self, mensaje, screenshot=None):
+        super().__init__(mensaje)
+        self.screenshot = screenshot
+
+
+def capturar(driver, carpeta, motivo, empresa):
+    """Guarda una captura con nombre único (empresa + motivo + hora). Devuelve la ruta o None."""
     try:
-        max_wait_time = 90
-        start_time = time.time()
-
-        while True:
-            try:
-                if len(driver.window_handles) > 2:
-                    print("Se ingresa a pestaña para procesar los archivos")
-                    logging.info("Se ingresa a pestaña para procesar los archivos")
-                    break
-
-                try:
-                    alert = WebDriverWait(driver, 3).until(EC.alert_is_present())
-                    print(f"Se detectó un alert")
-                    alert.accept()
-                    print("Alerta cerrada exitosamente.")
-                    sleep(2)
-                    logging.error(f"Se detecto una alerta durante la ejecucion de {empresa}, en el proceso {proceso}")
-                    raise Exception(f"Se detecto una alerta durante la ejecucion de {empresa}, en el proceso {proceso}")
-                
-                except (NoAlertPresentException, TimeoutException, WebDriverException):
-                    print("No hay alertas activas")
-
-                if time.time() - start_time > max_wait_time:
-                    print(f"Se alcanzó el tiempo máximo de espera en el proceso {proceso} de {empresa}. La ejecución se ha detenido.")
-                    screenshot_path = os.path.join(errores_PAT, f"screenshot_timeout_{empresa}.png")
-                    driver.save_screenshot(screenshot_path)
-                    logging.error("Se alcanzó el tiempo máximo de espera en el proceso {proceso} de {empresa}. La ejecución se ha detenido.")
-                    raise Exception(f"Se alcanzó el tiempo máximo de espera en el proceso {proceso} de {empresa}. La ejecución se ha detenido.")
-                
-                sleep(1)
-
-            except Exception as e:
-                screenshot_path = os.path.join(errores_PAT, f"screenshot_alert_detected_{empresa}.png")
-                driver.save_screenshot(screenshot_path)
-                raise Exception(f"{str(e)}")
-
-    except Exception as e:
-        print(f"Error en procesar archivos: {str(e)}")
-        raise Exception(f"{str(e)}")
+        os.makedirs(carpeta, exist_ok=True)
+        ruta = os.path.join(carpeta, f"{datetime.now():%Y%m%d_%H%M%S}_{motivo}_{empresa}.png")
+        driver.save_screenshot(ruta)
+        return ruta
+    except Exception:  # noqa: BLE001 - el navegador puede estar cerrado
+        return None
 
 
+def comprobar_alerta(driver, empresa, carpeta_errores, proceso):
+    """Espera a que SGC abra la ventana de proceso. Si aparece un alert, es un error."""
+    inicio = time.time()
+    while True:
+        if len(driver.window_handles) > 2:
+            logging.info("[%s] Se abrió la ventana del proceso %s", empresa, proceso)
+            return
 
-def monitorear_proceso_archivos(driver, empresa, errores_PAT, proceso):
-    global screenshot_path
-    try:
-        sleep(5)
-        max_wait_time = 90
-        driver.switch_to.window(driver.window_handles[-1]) 
-        proceso_anterior, unchanged_start_time = None, None
-
-        intentos = 0
-        max_intentos = 3 
-
-        while True:
-            try:
-                if len(driver.window_handles) < 3:
-                    print(f"Finaliza el {proceso} proceso de archivos")
-                    logging.info(f"Finaliza el {proceso} proceso de archivos")
-                    return  
-                
-                proceso_actual = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.progress-label"))).text
-
-                if proceso_anterior is not None:
-                    if proceso_actual == proceso_anterior:
-                        if unchanged_start_time is None:
-                            unchanged_start_time = time.time() 
-                        else:
-                            elapsed = time.time() - unchanged_start_time
-                            print(f"Tiempo transcurrido sin cambio: {elapsed:.2f} segundos")
-
-                            if elapsed >= max_wait_time:
-                                print("El proceso se ha congelado por 60 segundos, saliendo...")
-                                logging.error(f"El proceso se ha congelado {proceso} por 90 segundos: Se presume un congelamiento en el proceso de archivos")
-                                raise Exception(f"El proceso se ha congelado {proceso} por 90 segundos: Se presume un congelamiento en el proceso de archivos")
-                    else:
-                        proceso_anterior = proceso_actual
-                        unchanged_start_time = None
-                else:
-                    proceso_anterior = proceso_actual
-                    unchanged_start_time = None
-
-                sleep(5)
-            
-            except NoSuchWindowException:
-                intentos += 1
-                print(f"Intento {intentos} de {max_intentos} para reiniciar proceso.")
-                logging.error(f"La ventana se cerró inesperadamente. Reiniciando proceso {proceso}, intento {intentos} de {max_intentos}")
-                
-                if intentos >= max_intentos:
-                    print("Se alcanzó el máximo de intentos, deteniendo ejecución.")
-                    raise Exception(f"No se pudo recuperar la ventana en {max_intentos} intentos. Finalizando proceso.")
-
-                sleep(5)
-
-                if proceso == 1:
-                    sleep(5)
-                    driver.find_element(By.ID, 'xrpnlSeleccionar_xrdbPAT_S_D').click()
-                    driver.find_element(By.XPATH, '//*[@id="xbtnSiguientePage1_CD"]/span').click()
-                        
-                
-                elif proceso == 2:
-                    seleccionar = WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, 'xchkSeleccionarTodos_S_D')))
-                    seleccionar.click()
-                    sleep(2)
-                    ejecutar= WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, 'xbtnEjecutar_CD')))
-                    ejecutar.click()
-
-                comprobar_alerta(driver, empresa, errores_PAT) 
-
-            
-            except TimeoutException:
-                print("No se encontró el elemento en el tiempo esperado.")
-                return 
-    
-    except Exception as e:
-        print(f"Error en monitorear_proceso_archivos: {str(e)}")
-        screenshot_path = os.path.join(errores_PAT, f"screenshot_error_{empresa}.png")
         try:
-            driver.save_screenshot(screenshot_path)
-            print(f"Se guardó el screenshot en {screenshot_path}")
-        except:
-            print("No se pudo tomar el screenshot porque el driver ya no está disponible.")
-        
-        try:
-            driver.quit()
-        except:
+            alerta = WebDriverWait(driver, 3).until(EC.alert_is_present())
+            texto = alerta.text
+            alerta.accept()
+            sleep(2)
+            msg = f"SGC mostró una alerta en el proceso {proceso}: {texto}"
+            logging.error("[%s] %s", empresa, msg)
+            raise ErrorCarga(msg, capturar(driver, carpeta_errores, f"alerta_p{proceso}", empresa))
+        except (NoAlertPresentException, TimeoutException):
             pass
-        raise Exception(f"Error crítico en monitorear proceso archivos: {str(e)}")  
+        except ErrorCarga:
+            raise
+        except WebDriverException:
+            pass
 
+        if time.time() - inicio > ESPERA_MAXIMA:
+            msg = f"SGC no abrió la ventana del proceso {proceso} en {ESPERA_MAXIMA} s"
+            logging.error("[%s] %s", empresa, msg)
+            raise ErrorCarga(msg, capturar(driver, carpeta_errores, f"timeout_p{proceso}", empresa))
+        sleep(1)
+
+
+def _reintentar_paso(driver, proceso):
+    if proceso == 1:
+        sleep(5)
+        driver.find_element(By.ID, "xrpnlSeleccionar_xrdbPAT_S_D").click()
+        driver.find_element(By.XPATH, '//*[@id="xbtnSiguientePage1_CD"]/span').click()
+    elif proceso == 2:
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, "xchkSeleccionarTodos_S_D"))).click()
+        sleep(2)
+        WebDriverWait(driver, 20).until(EC.element_to_be_clickable((By.ID, "xbtnEjecutar_CD"))).click()
+
+
+def monitorear_proceso_archivos(driver, empresa, carpeta_errores, proceso, max_intentos=3):
+    """Sigue la barra de progreso hasta que la ventana del proceso se cierra."""
+    sleep(5)
+    driver.switch_to.window(driver.window_handles[-1])
+    anterior, sin_cambio_desde, intentos = None, None, 0
+
+    while True:
+        try:
+            if len(driver.window_handles) < 3:
+                logging.info("[%s] Finalizó el proceso %s", empresa, proceso)
+                return
+
+            actual = WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "div.progress-label"))).text
+
+            if actual != anterior:
+                anterior, sin_cambio_desde = actual, time.time()
+            elif time.time() - sin_cambio_desde >= ESPERA_MAXIMA:
+                msg = f"El proceso {proceso} no avanza hace {ESPERA_MAXIMA} s (se presume congelado)"
+                logging.error("[%s] %s", empresa, msg)
+                raise ErrorCarga(msg, capturar(driver, carpeta_errores, f"congelado_p{proceso}", empresa))
+            sleep(5)
+
+        except NoSuchWindowException:
+            intentos += 1
+            logging.error("[%s] La ventana se cerró inesperadamente. Reintento %s/%s del proceso %s",
+                          empresa, intentos, max_intentos, proceso)
+            if intentos >= max_intentos:
+                raise ErrorCarga(f"No se pudo recuperar la ventana del proceso {proceso} "
+                                 f"en {max_intentos} intentos")
+            sleep(5)
+            _reintentar_paso(driver, proceso)
+            comprobar_alerta(driver, empresa, carpeta_errores, proceso)  # antes faltaba 'proceso'
+            driver.switch_to.window(driver.window_handles[-1])
+
+        except TimeoutException:
+            # Igual que antes: si la barra ya no existe, el proceso terminó.
+            logging.info("[%s] No se encontró la barra de progreso; se asume fin del proceso %s", empresa, proceso)
+            return

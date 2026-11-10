@@ -1,6 +1,5 @@
 from time import sleep
 from selenium.webdriver.common.by import By
-from utils import envio_correo
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -53,17 +52,14 @@ def guardar_excel(driver, ruta_archivos_procesados, empresa, i, max_intentos=3):
                 "resultados": lista_resultados
             }
 
-            archivos_antes = len(os.listdir(ruta_archivos_procesados))
-
-
             df = pd.DataFrame(dicionario)
             ruta_excel = os.path.join(ruta_archivos_procesados, i[0:21] + ".xlsx")
-
             df.to_excel(ruta_excel, index=False, engine='openpyxl')
 
-            archivo_despues = len(os.listdir(ruta_archivos_procesados))
-            if archivos_antes == archivo_despues:
-                raise Exception("No se encontro archivo excel en la caperta de descarga")
+            # Antes se comparaba la cantidad de archivos de la carpeta: si el Excel ya
+            # existía (re-ejecución) se reportaba un error falso.
+            if not os.path.exists(ruta_excel) or os.path.getsize(ruta_excel) == 0:
+                raise Exception("No se generó el archivo Excel")
             
             logging.info(f"Archivo Excel de la empresa {empresa} procesado correctamente en intento {intentos + 1}")
             print(f"Archivo Excel de la empresa {empresa} generado con éxito.")
@@ -75,6 +71,5 @@ def guardar_excel(driver, ruta_archivos_procesados, empresa, i, max_intentos=3):
             print(f"Error en el intento {intentos}/{max_intentos} al procesar la tabla para {empresa}. Reintentando...")
             sleep(5) 
             
-    mensaje = f"Se ha detectado un problema al procesar la tabla universo y generar el archivo Excel para la empresa {empresa} después de {max_intentos} intentos."
-    logging.error(mensaje)
-    envio_correo.correo(mensaje, empresa)
+    logging.error(f"No se pudo generar el Excel de resultados de {empresa} después de {max_intentos} intentos.")
+    return False

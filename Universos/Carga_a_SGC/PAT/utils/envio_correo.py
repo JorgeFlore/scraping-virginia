@@ -3,6 +3,7 @@ from datetime import *
 from utils import credenciales
 import os
 import base64
+import logging
 
 correos=credenciales.listar_correos()
 
@@ -45,6 +46,10 @@ def notificar(email,mensaje,empresa,screenshot_path = None):
                         # "TablaReporte": f"<p>{archivo}</p>",
                     }]
     }
-    requests.post(url,json=data)
+    try:
+        r = requests.post(url, json=data, timeout=30)
+        r.raise_for_status()
+    except Exception as e:  # noqa: BLE001 - un correo fallido no debe detener la carga
+        logging.error(f"No se pudo enviar el correo a {email}: {e}")
 
 
